@@ -40,11 +40,11 @@ namespace OrganizationPanel
 			dataGridView1.DataSource = allOrganizations;
 		}
 
-		private void dataGridView1_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		private void button2_Click(object sender, EventArgs e)
 		{
-			var orgId = GetIdOfSelectedOrganization();
-			var employeesOfOrganization = GetEmployeesFromDbByOrg(orgId);
-			dataGridView2.DataSource = employeesOfOrganization;
+			var selectedOrg = GetIdOfSelectedOrganization();
+			var employees = GetEmployeesFromDbByOrg(selectedOrg);
+			_csvWork.ExportEmployeesToCsv(employees);
 		}
 
 		private void button3_Click(object sender, EventArgs e)
@@ -55,6 +55,13 @@ namespace OrganizationPanel
 			var unicEmployees = FilterOnlyUnicEmployees(allOrgEmployeesFromCsv, allOrgEmployeesFromDb);
 			InsertEmployeesToDb(unicEmployees);
 			dataGridView2.DataSource = unicEmployees;
+		}
+
+		private void dataGridView1_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			var orgId = GetIdOfSelectedOrganization();
+			var employeesOfOrganization = GetEmployeesFromDbByOrg(orgId);
+			dataGridView2.DataSource = employeesOfOrganization;
 		}
 
 		private List<Employee> GetEmployeesFromCsvForOrganization(int idOrg)
@@ -84,13 +91,6 @@ namespace OrganizationPanel
 				throw new Exception(FormMessages.EmployeesNotInserted);
 
 			return countOfInsertedRecords;
-		}
-
-		private void button2_Click(object sender, EventArgs e)
-		{
-			var selectedOrg = GetIdOfSelectedOrganization();
-			var employees = GetEmployeesFromDbByOrg(selectedOrg);
-			_csvWork.ExportEmployeesToCsv(employees);
 		}
 
 		private int GetIdOfSelectedOrganization()
