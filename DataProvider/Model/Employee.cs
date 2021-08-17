@@ -23,14 +23,19 @@ namespace OrganizationPanel
 		}
 		
 		public int Id { get; set; }
+		[DisplayName("Имя")]
 		public string FirstName { get; set; }
+		[DisplayName("Фамилия")]
 		public string SecondName { get; set; }
+		[DisplayName("Отчество")]
 		public string MiddleName { get; set; }
+		[DisplayName("Дата рождения")]
 		public DateTime DateOfBirth { get; set; }
 		[DisplayName("Номер паспорта")]
 		public string PassportId { get; set; }
 		[DisplayName("Серия паспорта")]
 		public string PassportSeries { get; set; }
+		[DisplayName("Примечание")]
 		public string Note { get; set; }
 		public int OrganizationId { get; set; }
 	}

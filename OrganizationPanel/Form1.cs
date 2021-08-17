@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -27,7 +25,7 @@ namespace OrganizationPanel
 			_importingCsvPath = importingCsvPath;
 			_exportingCsvPath = exportingCsvPath;
 			dataGridView1.AutoGenerateColumns = true;
-			
+
 			_csvDataProvider = new CsvFile(_importingCsvPath, _exportingCsvPath, divider);
 			_dbQueries = new DbHelper(_sqlConnection);
 			_csvWork = new CsvHelper(_csvDataProvider);
@@ -35,80 +33,81 @@ namespace OrganizationPanel
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			List<Organization> allOrganizations;
-			try
-			{
-				allOrganizations = _dbQueries.GetAllOrganizations();
-				if (!allOrganizations.Any())
-					MessageBox.Show(FormMessages.NoOrganizations, FormMessages.HaventRecords);
+			var allOrganizations = _dbQueries.GetAllOrganizations();
+			if (!allOrganizations.Any())
+				MessageBox.Show(FormMessages.NoOrganizations); //Не стал обарачивать в отдельный метод, так как в данном случае напротив усложнит чтение кода.
 
-				dataGridView1.DataSource = allOrganizations;
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, FormMessages.Error);
-			}
+			dataGridView1.DataSource = allOrganizations;
 		}
 
 		private void dataGridView1_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
 		{
-			if (_idOfSelectedRow != null)
-			{
-				try
-				{
-					var employeesOfOrganization = _dbQueries.GetOrganizationEmployees((int) _idOfSelectedRow);
-					if (!employeesOfOrganization.Any())
-						MessageBox.Show(FormMessages.NoEmployees, FormMessages.HaventRecords);
-
-					dataGridView2.DataSource = employeesOfOrganization;
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message, FormMessages.Error);
-				}
-			}
+			var orgId = GetIdOfSelectedOrganization();
+			var employeesOfOrganization = GetEmployeesFromDbByOrg(orgId);
+			dataGridView2.DataSource = employeesOfOrganization;
 		}
 
 		private void button3_Click(object sender, EventArgs e)
 		{
-			if (_idOfSelectedRow != null)
-			{
-				var insertedEmployees = _csvWork.ImportEmployeesFromCsv((int) _idOfSelectedRow);
-				if (insertedEmployees.Count == 0)
-				{
-					MessageBox.Show(FormMessages.NoEmployees);
-					return;
-				}
+			var orgId = GetIdOfSelectedOrganization();
+			var allOrgEmployeesFromCsv = GetEmployeesFromCsvForOrganization(orgId);
+			var allOrgEmployeesFromDb = _dbQueries.GetOrganizationEmployees(orgId);
+			var unicEmployees = FilterOnlyUnicEmployees(allOrgEmployeesFromCsv, allOrgEmployeesFromDb);
+			InsertEmployeesToDb(unicEmployees);
+			dataGridView2.DataSource = unicEmployees;
+		}
 
-				try
-				{
-					var countOfInsertedRecords = _dbQueries.InsertEmployeesToDb(insertedEmployees);
-					if (countOfInsertedRecords == 0)
-					{
-						MessageBox.Show(FormMessages.EmployeesNotInserted, FormMessages.CantInsertRecords);
-						return;
-					}
+		private List<Employee> GetEmployeesFromCsvForOrganization(int idOrg)
+		{
+			var employees = _csvWork.ImportEmployeesFromCsv(idOrg);
+			if (employees.Count == 0)
+				throw new Exception(FormMessages.NoEmployees);
 
-					dataGridView2.DataSource = _dbQueries.GetOrganizationEmployees((int) _idOfSelectedRow);
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message, FormMessages.Error);
-				}
-			}
+			return employees;
+		}
+
+		private List<Employee> FilterOnlyUnicEmployees(List<Employee> emplFromCsv, List<Employee> emplFromDb)
+		{
+			var unicEmployees = emplFromCsv
+				.Where(el => !emplFromDb.Select(empl => empl.Id).Contains(el.Id)).ToList();
+
+			if (unicEmployees.Count() == 0)
+				throw new Exception(FormMessages.CsvHaventNewEmployees);
+
+			return unicEmployees;
+		}
+
+		private int InsertEmployeesToDb(List<Employee> emploees)
+		{
+			var countOfInsertedRecords = _dbQueries.InsertEmployeesToDb(emploees.ToList());
+			if (countOfInsertedRecords == 0)
+				throw new Exception(FormMessages.EmployeesNotInserted);
+
+			return countOfInsertedRecords;
 		}
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			if (_idOfSelectedRow != null)
-			{
-				var employees = _dbQueries.GetOrganizationEmployees((int) _idOfSelectedRow);
-				_csvWork.ExportEmployeesToCsv(employees);
-			}
-			else
-			{
-				MessageBox.Show(FormMessages.NoSelectedOrg, FormMessages.CantExport);
-			}
+			var selectedOrg = GetIdOfSelectedOrganization();
+			var employees = GetEmployeesFromDbByOrg(selectedOrg);
+			_csvWork.ExportEmployeesToCsv(employees);
+		}
+
+		private int GetIdOfSelectedOrganization()
+		{
+			if (_idOfSelectedRow == null)
+				throw new Exception(FormMessages.NoSelectedOrg);
+
+			return (int) _idOfSelectedRow;
+		}
+
+		private List<Employee> GetEmployeesFromDbByOrg(int orgId)
+		{
+			var employees = _dbQueries.GetOrganizationEmployees((int) _idOfSelectedRow);
+			if (employees.Count == 0)
+				throw new ArgumentException(FormMessages.NoEmployees);
+
+			return employees;
 		}
 	}
 }

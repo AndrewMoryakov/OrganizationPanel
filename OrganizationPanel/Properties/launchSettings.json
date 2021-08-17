@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "OrganizationPanel": {
+      "commandName": "Project",
+      "commandLineArgs": "\"d:\\out_eployees.csv\" \"d:\\employees_storage.csv\" \";\" \"Data Source=.;Initial Catalog=Organization; Integrated Security=True;\""
+    }
+  }
+}

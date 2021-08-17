@@ -46,7 +46,7 @@ namespace OrganizationPanel
 			// 
 			// dataGridView1
 			// 
-			this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+			this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
 			dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -64,7 +64,8 @@ namespace OrganizationPanel
 			dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
-			this.dataGridView1.Location = new System.Drawing.Point(3, 45);
+			this.dataGridView1.Location = new System.Drawing.Point(2, 23);
+			this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
 			this.dataGridView1.Name = "dataGridView1";
 			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -76,13 +77,13 @@ namespace OrganizationPanel
 			this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
 			this.dataGridView1.RowHeadersWidth = 62;
 			this.dataGridView1.RowTemplate.Height = 33;
-			this.dataGridView1.Size = new System.Drawing.Size(730, 162);
+			this.dataGridView1.Size = new System.Drawing.Size(682, 129);
 			this.dataGridView1.TabIndex = 0;
 			this.dataGridView1.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_CellMouseUp);
 			// 
 			// dataGridView2
 			// 
-			this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+			this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
 			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
 			dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -100,7 +101,8 @@ namespace OrganizationPanel
 			dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle5;
-			this.dataGridView2.Location = new System.Drawing.Point(3, 209);
+			this.dataGridView2.Location = new System.Drawing.Point(2, 156);
+			this.dataGridView2.Margin = new System.Windows.Forms.Padding(2);
 			this.dataGridView2.Name = "dataGridView2";
 			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
@@ -112,14 +114,15 @@ namespace OrganizationPanel
 			this.dataGridView2.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
 			this.dataGridView2.RowHeadersWidth = 62;
 			this.dataGridView2.RowTemplate.Height = 33;
-			this.dataGridView2.Size = new System.Drawing.Size(730, 180);
+			this.dataGridView2.Size = new System.Drawing.Size(682, 238);
 			this.dataGridView2.TabIndex = 2;
 			// 
 			// button1
 			// 
-			this.button1.Location = new System.Drawing.Point(3, 2);
+			this.button1.Location = new System.Drawing.Point(2, 1);
+			this.button1.Margin = new System.Windows.Forms.Padding(2);
 			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(156, 28);
+			this.button1.Size = new System.Drawing.Size(104, 18);
 			this.button1.TabIndex = 3;
 			this.button1.Text = "Загрузить из БД";
 			this.button1.UseVisualStyleBackColor = true;
@@ -127,9 +130,10 @@ namespace OrganizationPanel
 			// 
 			// button2
 			// 
-			this.button2.Location = new System.Drawing.Point(180, 2);
+			this.button2.Location = new System.Drawing.Point(120, 1);
+			this.button2.Margin = new System.Windows.Forms.Padding(2);
 			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(146, 28);
+			this.button2.Size = new System.Drawing.Size(97, 18);
 			this.button2.TabIndex = 4;
 			this.button2.Text = "Экспорт в CSV";
 			this.button2.UseVisualStyleBackColor = true;
@@ -137,9 +141,10 @@ namespace OrganizationPanel
 			// 
 			// button3
 			// 
-			this.button3.Location = new System.Drawing.Point(349, 2);
+			this.button3.Location = new System.Drawing.Point(233, 1);
+			this.button3.Margin = new System.Windows.Forms.Padding(2);
 			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(146, 28);
+			this.button3.Size = new System.Drawing.Size(97, 18);
 			this.button3.TabIndex = 5;
 			this.button3.Text = "Импорт из CSV";
 			this.button3.UseVisualStyleBackColor = true;
@@ -147,14 +152,15 @@ namespace OrganizationPanel
 			// 
 			// Form1
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(735, 406);
+			this.ClientSize = new System.Drawing.Size(685, 396);
+			this.Controls.Add(this.dataGridView1);
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.dataGridView2);
-			this.Controls.Add(this.dataGridView1);
+			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "Form1";
 			this.Text = "Form1";
 			((System.ComponentModel.ISupportInitialize) (this.dataGridView1)).EndInit();
