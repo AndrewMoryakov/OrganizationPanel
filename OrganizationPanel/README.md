@@ -1,2 +1,0 @@
-# OrganizationPanel
-OrganizationPanel
